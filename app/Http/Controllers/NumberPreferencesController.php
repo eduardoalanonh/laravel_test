@@ -2,84 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NumberPreferences;
+use App\Http\Requests\NumberPreferencePostRequest;
+use App\Services\NumberPreference\NumberPreferenceService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class NumberPreferencesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private NumberPreferenceService $numberPreferenceService;
+
+    public function __construct(NumberPreferenceService $numberPreferenceService)
     {
-        //
+        $this->numberPreferenceService = $numberPreferenceService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getNumberPreferencesCollection(Request $request, $id, $numberId)
     {
-        //
+        return $this->numberPreferenceService->getNumberPreferencesCollection($request, $id, $numberId);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function destroyNumberPreferences(Request $request, $id, $numberId, $numberPreferenceId)
     {
-        //
+        return $this->numberPreferenceService->destroyNumberPreferences($request, $id, $numberId, $numberPreferenceId);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\NumberPreferences  $numberPreferences
-     * @return \Illuminate\Http\Response
-     */
-    public function show(NumberPreferences $numberPreferences)
+    public function storeNumberPreferences(NumberPreferencePostRequest $request, $id, $numberId)
     {
-        //
+        return $this->numberPreferenceService->storeNumberPreferences($request, $id, $numberId);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\NumberPreferences  $numberPreferences
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NumberPreferences $numberPreferences)
+    public function editNumberPreferences(Request $request, $id, $numberId, $numberPreferenceId)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\NumberPreferences  $numberPreferences
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, NumberPreferences $numberPreferences)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\NumberPreferences  $numberPreferences
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(NumberPreferences $numberPreferences)
-    {
-        //
+        return $this->numberPreferenceService->editNumberPreferences($request, $id, $numberId, $numberPreferenceId);
     }
 }

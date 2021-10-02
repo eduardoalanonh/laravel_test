@@ -24,6 +24,10 @@ class Customer extends Model
         'status'
     ];
 
+    protected $attributes = [
+        'status' => 'new'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -34,5 +38,16 @@ class Customer extends Model
         return $this->hasMany(Number::class);
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($customer) {
+            $customer->numbers()->with('numberPreferences')->get()->each(function ($number) {
+                $number->numberPreferences()->delete();
+            });
+            $customer->numbers()->delete();
+        });
+    }
 
 }

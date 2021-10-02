@@ -19,13 +19,36 @@ class Number extends Model
         'status',
     ];
 
+    protected $rules = [
+        'number' => 'min:8|max:14'
+    ];
+
+    protected $attributes = [
+        'status' => 'active'
+    ];
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function numberPreferences(): HasMany
     {
         return $this->hasMany(NumberPreferences::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($number) {
+            $number->numberPreferences()->delete();
+        });
+    }
+
 }

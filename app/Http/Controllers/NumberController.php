@@ -2,84 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Number;
+use App\Http\Requests\NumberPostRequest;
+use App\Services\Number\NumberService;
 use Illuminate\Http\Request;
+
 
 class NumberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private NumberService $numberService;
+
+    public function __construct(NumberService $numberService)
     {
-        //
+        $this->numberService = $numberService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function storeNumbers(NumberPostRequest $request, $id)
     {
-        //
+        return $this->numberService->storeNumbers($request, $id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getNumberCollection(Request $request, $id)
     {
-        //
+        return $this->numberService->getNumberCollection($request, $id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Number  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Number $number)
+    public function getNumberResource(Request $request, $id, $numberId)
     {
-        //
+        return $this->numberService->getNumberResource($request, $id, $numberId);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Number  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Number $number)
+    public function editNumber(Request $request, $id, $numberId)
     {
-        //
+        $this->numberService->editNumber($request, $id, $numberId);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Number  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Number $number)
+    public function destroyNumber(Request $request, $id, $numberId)
     {
-        //
+        $this->numberService->destroyNumber($request, $id, $numberId);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Number  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Number $number)
-    {
-        //
-    }
 }
